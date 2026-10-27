@@ -1,15 +1,30 @@
 'use agent';
-import {useDelivery, useInitialData, useModel} from '@flue/runtime';
+import {useDelivery, useInitialData, useModel, usePersistentState, useTool} from '@flue/runtime';
 import * as v from "valibot";
 
 export function CustomerSupport() {
     const {name} = useInitialData<{ name: string }>()
     const message = useDelivery();
-    useModel(message.body.includes("/fast")
+    const [mode, setMode] = usePersistentState<"fast" | "slow">("mode", "slow");
+    useModel(mode === "fast"
         ? "cloudflare/@cf/zai-org/glm-5.3-flash"
         : "cloudflare/@cf/zai-org/glm-5.3",
     );
-    return `You are a customer support agent and now you're helping ${name}`;
+    useTool({
+        name: "set_mode",
+        description: "Use when the user wants to set the mode of the agent",
+        input: v.object({
+            mode: v.picklist(["fast", "slow"]),
+        }),
+        run: ({data: {mode}}) => {
+            console.log("New mode is", mode);
+            setMode(mode);
+            return {
+                output: `New mode set to ${mode}`,
+            };
+        },
+    });
+    return `You are a customer support agent and now you're helping ${name}. you are in ${mode} mode`;
 }
 
 CustomerSupport.initialData = v.object({

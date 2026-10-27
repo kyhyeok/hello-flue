@@ -13509,7 +13509,7 @@ declare abstract class Flagship {
     getObjectDetails<T extends object>(flagKey: string, defaultValue: T, context?: FlagshipEvaluationContext): Promise<FlagshipEvaluationDetails<T>>;
 }
 /**
- * Hello World binding to serve as an explanatory example. DO NOT USE
+ * Cs World binding to serve as an explanatory example. DO NOT USE
  */
 interface HelloWorldBinding {
     /**
