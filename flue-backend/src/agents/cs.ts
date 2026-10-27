@@ -1,11 +1,16 @@
 'use agent';
-import {useDelivery, useInitialData, useModel, usePersistentState, useTool} from '@flue/runtime';
+import {useDataWriter, useDelivery, useInitialData, useModel, usePersistentState, useTool} from '@flue/runtime';
 import * as v from "valibot";
 
 export function CustomerSupport() {
     const {name} = useInitialData<{ name: string }>()
     const message = useDelivery();
     const [mode, setMode] = usePersistentState<"fast" | "slow">("mode", "slow");
+    const writeProgress = useDataWriter("progress", {
+        schema: v.object({
+            stage: v.string(),
+        }),
+    });
     useModel(mode === "fast"
             ? "cloudflare/@cf/zai-org/glm-5.3-flash"
             : "cloudflare/@cf/zai-org/glm-5.3", {
@@ -39,6 +44,21 @@ export function CustomerSupport() {
             result: v.number()
         }),
         async run({data: {a, b}}) {
+            writeProgress({
+                stage: "Starting...",
+            });
+            await new Promise((resolve) => setTimeout(resolve, 5000));
+
+            writeProgress({
+                stage: "Finishing...",
+            });
+
+            await new Promise((resolve) => setTimeout(resolve, 5000));
+
+            writeProgress({
+                stage: "Done.",
+            });
+
             return {
                 output: {
                     result: a + b,
