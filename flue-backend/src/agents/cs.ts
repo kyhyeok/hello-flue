@@ -7,8 +7,12 @@ export function CustomerSupport() {
     const message = useDelivery();
     const [mode, setMode] = usePersistentState<"fast" | "slow">("mode", "slow");
     useModel(mode === "fast"
-        ? "cloudflare/@cf/zai-org/glm-5.3-flash"
-        : "cloudflare/@cf/zai-org/glm-5.3",
+            ? "cloudflare/@cf/zai-org/glm-5.3-flash"
+            : "cloudflare/@cf/zai-org/glm-5.3", {
+            compaction: {
+                model: "cloudflare/@cf/zai-org/glm-5.3-flash",
+            },
+        },
     );
     useTool({
         name: "set_mode",
