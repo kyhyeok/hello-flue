@@ -7,6 +7,6 @@ import { useModel } from '@flue/runtime';
 export function Hello() {
 	// Cloudflare Workers AI model via the env.AI binding — no API key needed
 	// on the Cloudflare target. The `cloudflare` provider accepts any @cf/ ID.
-	useModel('cloudflare-workers-ai/@cf/zai-org/glm-5.3-flash');
+	useModel('cloudflare/@cf/zai-org/glm-5.3-flash');
 	return 'You are a helpful assistant. Keep replies short.';
 }
