@@ -19,7 +19,7 @@ npm install
 npm run dev
 ```
 
-The Hello agent is served at `http://localhost:5173/agents/hello` — see `src/app.ts` for the route map and an example request.
+The Cs agent is served at `http://localhost:5173/agents/hello` — see `src/app.ts` for the route map and an example request.
 
 ## Talk to your agent
 
