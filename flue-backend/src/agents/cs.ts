@@ -66,6 +66,35 @@ export function CustomerSupport() {
             };
         },
     });
+    useTool({
+        name: "durable_tool",
+        description: "This is to add a and b",
+        durable: true,
+        async run({step}) {
+            console.log("starting tool");
+
+            console.log(Date.now());
+
+            const expensiveValue = await step.do("expensive_calculation", async () => {
+                // expensive calculation
+                await new Promise(resolve => setTimeout(resolve, 10000));
+                return 123123123;
+            });
+
+            console.log(Date.now());
+
+            await new Promise(resolve => setTimeout(resolve, 10000));
+
+            console.log(expensiveValue);
+
+            // 만약 여기서 사건사고가 일어났다면
+
+            await step.do("save_in_db", () => {
+                // save(expensiveValue)
+                return "ok";
+            });
+        },
+    });
     return `You are a customer support agent and now you're helping ${name}. you are in ${mode} mode`;
 }
 
