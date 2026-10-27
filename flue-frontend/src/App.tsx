@@ -6,12 +6,12 @@ function App() {
     const [message, setMessage] = useState("");
 
     const client = useMemo(() => createFlueClient({
-        url: "http://localhost:5173/agents/hyeok",
+        url: "http://localhost:5173/agents/kyhyeok",
         token: "TRUSTME"
     }), []);
 
 
-    const {messages, status} = useFlueAgent({
+    const {sendMessage, messages, status} = useFlueAgent({
         client,
     });
 
@@ -21,15 +21,7 @@ function App() {
         const submittedMessage = message.trim();
         if (!submittedMessage) return;
 
-        await client.send({
-            message: {
-                kind: "user",
-                body: submittedMessage,
-            },
-            initialData: {
-                name: "hyeok",
-            },
-        });
+        await sendMessage(submittedMessage);
 
         setMessage("");
     };

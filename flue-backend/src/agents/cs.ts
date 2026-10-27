@@ -1,17 +1,29 @@
 'use agent';
-import {
-    useAgentFinish,
-    useAgentStart,
-    useDataWriter,
-    useDelivery,
-    useInitialData,
-    useModel,
-    usePersistentState, useResponseFinish, useResponseStart,
-    useTool
-} from '@flue/runtime';
-import * as v from "valibot";
+import {defineSkill, useModel, useSkill} from '@flue/runtime';
+import cavemanSkill from "../skills/caveman/SKILL.md";
+
+const pirateSkill = defineSkill({
+    name: "pirate",
+    description: "Speak like a pirate, use this when the user asks for a caveman explanation.",
+    instructions: `
+    Explain the subject using nautical metaphors and occasional
+    pirate expressions.
+    
+    Keep all technical information accurate.
+    Keep the response easy to understand.
+    Do not turn every word into pirate slang.
+    Finish with "Arrr!"
+`
+})
 
 export function CustomerSupport() {
+
+    useSkill(cavemanSkill);
+    useSkill(pirateSkill);
+    useModel("cloudflare/@cf/zai-org/glm-5.3-flash");
+
+    return `You are a customer support agent`;
+    /*
     const {name} = useInitialData<{ name: string }>()
     const message = useDelivery();
     const [mode, setMode] = usePersistentState<"fast" | "slow">("mode", "slow");
@@ -124,8 +136,9 @@ export function CustomerSupport() {
     });
 
     return `You are a customer support agent and now you're helping ${name}. you are in ${mode} mode`;
+     */
 }
 
-CustomerSupport.initialData = v.object({
-    name: v.string(),
-});
+// CustomerSupport.initialData = v.object({
+//     name: v.string(),
+// });
