@@ -7,4 +7,6 @@
 //
 // https://flueframework.com/docs/guide/cloudflare-target/#extending-cloudflarets-entrypoint
 
-export {};
+// Cloudflare Sandbox(컨테이너) Durable Object 클래스.
+// 바인딩·migration·컨테이너 이미지는 wrangler.jsonc에 선언되어 있다.
+export { Sandbox } from '@cloudflare/sandbox';

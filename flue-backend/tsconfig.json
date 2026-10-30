@@ -7,7 +7,8 @@
 			"ESNext"
 		],
 		"types": [
-			"node"
+			"node",
+			"./worker-configuration.d.ts"
 		],
 		"allowImportingTsExtensions": true,
 		"verbatimModuleSyntax": true,

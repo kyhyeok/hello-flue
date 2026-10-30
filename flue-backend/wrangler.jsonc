@@ -13,5 +13,17 @@
   // (Cs -> FlueCustomerSupportAgent), and Cloudflare requires a migration entry
   // for each one. Append a new tag when you add an agent:
   // https://flueframework.com/docs/guide/cloudflare-target/#managing-migrations
-  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["FlueCustomerSupportAgent"] }],
+  "migrations": [
+    { "tag": "v1", "new_sqlite_classes": ["FlueCustomerSupportAgent"] },
+    // src/cloudflare.ts에서 export한 Cloudflare Sandbox Durable Object
+    { "tag": "v2", "new_sqlite_classes": ["Sandbox"] },
+  ],
+  // Cloudflare Sandbox 바인딩. agent에서는 env.Sandbox로 접근한다.
+  // 컨테이너는 Workers Paid 기능이며, 로컬 `vite dev`는 Docker 데몬이 필요하다.
+  // https://flueframework.com/docs/ecosystem/deploy/cloudflare/#connecting-a-remote-sandbox
+  "durable_objects": {
+    "bindings": [{ "class_name": "Sandbox", "name": "Sandbox" }],
+  },
+  // 이미지 태그는 package.json의 @cloudflare/sandbox 버전과 반드시 일치해야 한다(Dockerfile 참고).
+  "containers": [{ "class_name": "Sandbox", "image": "./Dockerfile" }],
 }

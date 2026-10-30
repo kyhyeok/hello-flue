@@ -4,3 +4,6 @@ dist/
 .dev.vars*
 .wrangler/
 data/
+
+# 전역 gitignore가 Dockerfile을 무시하지만, Cloudflare Sandbox 컨테이너 이미지라 커밋해야 한다
+!Dockerfile
