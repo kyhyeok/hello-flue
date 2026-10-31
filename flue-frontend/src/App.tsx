@@ -6,7 +6,7 @@ function App() {
     const [message, setMessage] = useState("");
 
     const client = useMemo(() => createFlueClient({
-        url: "http://localhost:5173/agents/kyhyeok-3",
+        url: "https://flue-backend.kyhyeok.workers.dev/agents/kyhyeok-3",
         token: "TRUSTME"
     }), []);
 
